@@ -14,6 +14,8 @@ const EditPage: React.FC<Props> = ({ pages, savePage }) => {
   const [selectedPage, setSelectedPage] = useState<string>('');
   const [pageData, setPageData] = useState<Page>({ title: '', content: '' });
   const [message, setMessage] = useState<string>('');
+  const [messageType, setMessageType] = useState<string>('');
+
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const pageName = e.target.value;
@@ -31,22 +33,30 @@ const EditPage: React.FC<Props> = ({ pages, savePage }) => {
   const handleSave = () => {
     if (!pageData.title || !pageData.content) {
       setMessage('Please fill out both title and content fields.');
+      setMessageType('danger');
       return;
     }
 
     if (selectedPage) {
       savePage(selectedPage, pageData);
       setMessage('Page saved successfully!');
+      setMessageType('success');
     }
   };
 
   return (
-    <div>
-      <h3>Edit pages</h3>
-      {message && <div style={{ color: 'green', marginBottom: '10px' }}>{message}</div>}
-      <div>
-        <label>Select page:</label>
-        <select value={selectedPage} onChange={handleSelectChange}>
+    <div className="container mt-4">
+      <h3 className="mb-3">Edit Pages</h3>
+
+      {message && (
+        <div className={`alert alert-${messageType} mt-3`} role="alert">
+          {message}
+        </div>
+      )}
+
+      <div className="mb-3">
+        <label className="form-label">Select page:</label>
+        <select className="form-select" value={selectedPage} onChange={handleSelectChange}>
           <option value="">Select...</option>
           {Object.keys(pages).map((pageName) => (
             <option key={pageName} value={pageName}>
@@ -56,27 +66,33 @@ const EditPage: React.FC<Props> = ({ pages, savePage }) => {
         </select>
       </div>
 
-      <div>
-        <label>Title:</label>
+      <div className="mb-3">
+        <label className="form-label">Title:</label>
         <input
           type="text"
           name="title"
+          className="form-control"
           value={pageData.title}
           onChange={handleInputChange}
         />
       </div>
 
-      <div>
-        <label>Content:</label>
+      <div className="mb-3">
+        <label className="form-label">Content:</label>
         <textarea
           name="content"
+          className="form-control"
+          rows={4}
           value={pageData.content}
           onChange={handleInputChange}
         />
       </div>
 
-      <button onClick={handleSave}>Save</button>
+      <button className="btn btn-primary" onClick={handleSave}>
+        Save
+      </button>
     </div>
+
   );
 };
 

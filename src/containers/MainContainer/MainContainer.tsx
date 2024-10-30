@@ -39,6 +39,8 @@ const MainContainer: React.FC = () => {
       await savePage(pageName, updatedPage);
     } catch (error) {
       console.error('Error saving page:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
