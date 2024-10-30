@@ -1,8 +1,14 @@
+import { Route, Routes } from 'react-router-dom';
+import MainContainer from './containers/MainContainer/MainContainer.tsx';
+
 const App = () => {
   return (
-    <div>
+    <>
+      <Routes>
+        <Route path="/*" element={<MainContainer />} />
+      </Routes>
+    </>
 
-    </div>
   );
 };
 
