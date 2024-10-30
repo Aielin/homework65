@@ -92,7 +92,6 @@ const EditPage: React.FC<Props> = ({ pages, savePage }) => {
         Save
       </button>
     </div>
-
   );
 };
 
